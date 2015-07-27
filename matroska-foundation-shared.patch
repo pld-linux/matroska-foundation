@@ -1,0 +1,221 @@
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/config.h.orig	2015-07-07 21:13:46.356361073 +0200
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/config.h	2015-07-07 21:14:04.243027020 +0200
+@@ -1,4 +1,3 @@
+-#define COREMAKE_STATIC
+ #define COREMAKE_UNICODE
+ #define CONFIG_EBML_WRITING
+ #define CONFIG_EBML_UNICODE
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/mkclean/mkclean.proj.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/mkclean/mkclean.proj	2015-07-07 21:57:53.672916537 +0200
+@@ -5,6 +5,7 @@
+   PROJECT_NAME "mkclean"
+   PROJECT_VERSION  0.8.8
+   PROJECT_VENDOR   "Matroska"
++  USE ebml2
+   USE matroska2
+   IF !CONFIG_EBML_UNICODE
+     USE parser
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/node/node.h.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/node/node.h	2015-07-21 22:11:27.385521000 +0200
+@@ -41,9 +41,9 @@
+ #include "corec/str/str.h"
+ #include "corec/memheap.h"
+ 
+-#if defined(NODE_EXPORTS)
++#if defined(NODE_EXPORTS) || defined (EBML2_EXPORTS)
+ #define NODE_DLL DLLEXPORT
+-#elif defined(NODE_IMPORTS)
++#elif defined(NODE_IMPORTS) || defined (EBML2_IMPORTS)
+ #define NODE_DLL DLLIMPORT
+ #else
+ #define NODE_DLL
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/array/array.h.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/array/array.h	2015-07-22 20:45:34.495444711 +0200
+@@ -37,9 +37,9 @@
+ extern "C" {
+ #endif
+ 
+-#if defined(ARRAY_EXPORTS)
++#if defined(ARRAY_EXPORTS) || defined(EBML2_EXPORTS)
+ #define ARRAY_DLL DLLEXPORT
+-#elif defined(ARRAY_IMPORTS)
++#elif defined(ARRAY_IMPORTS) || defined(EBML2_IMPORTS)
+ #define ARRAY_DLL DLLIMPORT
+ #else
+ #define ARRAY_DLL
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/str/str.h.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/str/str.h	2015-07-22 20:58:07.995413103 +0200
+@@ -36,9 +36,9 @@
+ extern "C" {
+ #endif
+ 
+-#if defined(STR_EXPORTS)
++#if defined(STR_EXPORTS) || defined(EBML2_EXPORTS)
+ #define STR_DLL DLLEXPORT
+-#elif defined(STR_IMPORTS)
++#elif defined(STR_IMPORTS) || defined(EBML2_IMPORTS)
+ #define STR_DLL DLLIMPORT
+ #else
+ #define STR_DLL
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libebml2/ebml/ebml.h.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libebml2/ebml/ebml.h	2015-07-22 21:35:18.088652842 +0200
+@@ -244,21 +244,21 @@
+ #endif
+ 
+ // EBML contexts
+-extern CONTEXT_CONST ebml_context EBML_ContextHead;
+-extern CONTEXT_CONST ebml_context EBML_ContextDummy;
+-extern CONTEXT_CONST ebml_context EBML_ContextVersion;
+-extern CONTEXT_CONST ebml_context EBML_ContextReadVersion;
+-extern CONTEXT_CONST ebml_context EBML_ContextMaxIdLength;
+-extern CONTEXT_CONST ebml_context EBML_ContextMaxSizeLength;
+-extern CONTEXT_CONST ebml_context EBML_ContextDocType;
+-extern CONTEXT_CONST ebml_context EBML_ContextDocTypeVersion;
+-extern CONTEXT_CONST ebml_context EBML_ContextDocTypeReadVersion;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextHead;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextDummy;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextVersion;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextReadVersion;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextMaxIdLength;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextMaxSizeLength;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextDocType;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextDocTypeVersion;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextDocTypeReadVersion;
+ 
+-extern CONTEXT_CONST ebml_context EBML_ContextEbmlVoid;
+-extern CONTEXT_CONST ebml_context EBML_ContextEbmlCrc32;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextEbmlVoid;
++EBML_DLL extern CONTEXT_CONST ebml_context EBML_ContextEbmlCrc32;
+ 
+ //extern const ebml_context EBML_ContextGlobals;
+-extern const ebml_semantic EBML_SemanticGlobals[];
++EBML_DLL extern const ebml_semantic EBML_SemanticGlobals[];
+ 
+ #ifdef __cplusplus
+ }
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/libmatroska2.proj.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/libmatroska2.proj	2015-07-22 21:31:33.498662318 +0200
+@@ -34,6 +34,7 @@
+ {
+   DEFINE MATROSKA_LIBRARY
+   USE matroska2_group
++  LIBS z
+ }
+ 
+ GROUP matroska2_haali
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/spectool/data2lib2.c.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/spectool/data2lib2.c	2015-07-26 12:27:44.332194804 +0200
+@@ -298,7 +298,7 @@
+ 
+         if (Extras->PassedEBML)
+         {
+-            TextPrintf(CFile, T("extern const ebml_context MATROSKA_Context%s;\n"), elt->Name);
++            TextPrintf(CFile, T("MATROSKA_DLL extern const ebml_context MATROSKA_Context%s;\n"), elt->Name);
+             if (elt->Type==EBML_MASTER)
+                 TextWrite(CFile, T("\n"));
+         }
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/matroska/matroska.h.orig	2015-07-26 13:21:15.122060060 +0200
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/matroska/matroska.h	2015-07-26 13:50:06.318654074 +0200
+@@ -195,6 +195,6 @@
+ EBML_DLL matroska_block *MATROSKA_GetBlockForTimecode(matroska_cluster *Cluster, timecode_t Timecode, int16_t Track);
+ EBML_DLL void MATROSKA_LinkClusterBlocks(matroska_cluster *Cluster, ebml_master *RSegmentInfo, ebml_master *Tracks, bool_t KeepUnmatched);
+ 
+-extern const ebml_context MATROSKA_ContextStream;
++MATROSKA_DLL extern const ebml_context MATROSKA_ContextStream;
+ 
+ #endif // MATROSKA_MATROSKA_H
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/file/file.h.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/file/file.h	2015-07-26 13:51:28.251983970 +0200
+@@ -37,9 +37,9 @@
+ extern "C" {
+ #endif
+ 
+-#if defined(FILE_EXPORTS)
++#if defined(FILE_EXPORTS) || defined(EBML2_EXPORTS)
+ #define FILE_DLL DLLEXPORT
+-#elif defined(FILE_IMPORTS)
++#elif defined(FILE_IMPORTS) || defined(EBML2_IMPORTS)
+ #define FILE_DLL DLLIMPORT
+ #else
+ #define FILE_DLL
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/date/date.h.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/date/date.h	2015-07-26 15:00:22.798477128 +0200
+@@ -36,9 +36,9 @@
+ extern "C" {
+ #endif
+ 
+-#if defined(DATE_EXPORTS)
++#if defined(DATE_EXPORTS) || defined(EBML2_EXPORTS)
+ #define DATE_DLL DLLEXPORT
+-#elif defined(DATE_IMPORTS)
++#elif defined(DATE_IMPORTS) || defined(EBML2_IMPORTS)
+ #define DATE_DLL DLLIMPORT
+ #else
+ #define DATE_DLL
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/mkvalidator/mkvalidator.proj.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/mkvalidator/mkvalidator.proj	2015-07-26 15:10:37.748451320 +0200
+@@ -3,6 +3,7 @@
+   PROJECT_NAME "mkvalidator"
+   PROJECT_VERSION  0.5.0
+   PROJECT_VENDOR   "Matroska"
++  USE ebml2
+   USE matroska2
+   SOURCE mkvalidator.c
+   COMPILE src.br
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/mkvalidator/mkvalidator.c.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/mkvalidator/mkvalidator.c	2015-07-26 16:41:32.691555426 +0200
+@@ -895,7 +895,7 @@
+ 
+     // Core-C init phase
+     ParserContext_Init(&p,NULL,NULL,NULL);
+-	StdAfx_Init((nodemodule*)&p);
++//	StdAfx_Init((nodemodule*)&p);
+     ProjectSettings((nodecontext*)&p);
+ 
+     // EBML & Matroska Init
+@@ -1437,7 +1437,7 @@
+     MATROSKA_Done((nodecontext*)&p);
+ 
+     // Core-C ending
+-	StdAfx_Done((nodemodule*)&p);
++//	StdAfx_Done((nodemodule*)&p);
+     ParserContext_Done(&p);
+ 
+     return Result;
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/test/mkvtree.c.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/test/mkvtree.c	2015-07-26 16:47:17.138208091 +0200
+@@ -30,7 +30,6 @@
+ 
+ #define CONFIG_EBML_UNICODE
+ #include "matroska/matroska.h"
+-#include "mkvtree_stdafx.h"
+ 
+ static int ShowPos = 0;
+ 
+@@ -301,7 +300,7 @@
+ #else
+     NodeContext_Init(&p,NULL,NULL,NULL);
+ #endif
+-	StdAfx_Init((nodemodule*)&p);
++//	StdAfx_Init((nodemodule*)&p);
+     // EBML & Matroska Init
+     MATROSKA_Init((nodecontext*)&p);
+ 
+@@ -320,7 +319,7 @@
+     // EBML & Matroska ending
+     MATROSKA_Done((nodecontext*)&p);
+     // Core-C ending
+-	StdAfx_Done((nodemodule*)&p);
++//	StdAfx_Done((nodemodule*)&p);
+ #if defined(CONFIG_EBML_UNICODE)
+     ParserContext_Done(&p);
+ #else
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/test/test.proj.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/libmatroska2/test/test.proj	2015-07-26 16:48:07.278205799 +0200
+@@ -1,5 +1,6 @@
+ CON mkvtree
+ {
++  USE ebml2
+   USE matroska2
+   SOURCE mkvtree.c
+ }

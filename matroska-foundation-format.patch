@@ -1,0 +1,30 @@
+#--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/parser/parser2.c.orig	2015-07-26 20:00:49.941053931 +0200
+#+++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/parser/parser2.c	2015-07-26 20:01:13.681052936 +0200
+#@@ -1915,7 +1915,7 @@
+# 
+# static NOINLINE bool_t ReadHex(const tchar_t** p,intptr_t* Out,bool_t RGB, bool_t Neg);
+# 
+#-NOINLINE bool_t ExprIsTokenEx(const tchar_t** p,const tchar_t* Name,...)
+#+NOINLINE bool_t ExprIsTokenEx(const tchar_t** p,const tchar_t* Name,...) __attribute__((format(scanf, 2, 3)))
+# {
+#     const tchar_t* s = *p;
+#     bool_t Long = 0;
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/parser/parser2.c.orig	2015-07-26 20:06:34.367706144 +0200
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/helpers/parser/parser2.c	2015-07-26 20:06:44.351039013 +0200
+@@ -1915,6 +1915,7 @@
+ 
+ static NOINLINE bool_t ReadHex(const tchar_t** p,intptr_t* Out,bool_t RGB, bool_t Neg);
+ 
++__attribute__((format(scanf, 2, 3)))
+ NOINLINE bool_t ExprIsTokenEx(const tchar_t** p,const tchar_t* Name,...)
+ {
+     const tchar_t* s = *p;
+@@ -2019,7 +2020,7 @@
+ 
+ NOINLINE bool_t ExprIsToken(const tchar_t** p,const tchar_t* Name)
+ {
+-    return ExprIsTokenEx(p,Name);
++    return ExprIsTokenEx(p,Name,NULL /*workaround*/);
+ }
+ 
+ uint32_t StringToIP(const tchar_t *Address)
