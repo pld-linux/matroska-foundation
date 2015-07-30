@@ -82,7 +82,7 @@ cd spectool
 %{__mv} matroska_sem.h ../libmatroska2/matroska
 cd ..
 
-%{__make} \
+%{__make} -j1 \
 	V=1 \
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
@@ -93,7 +93,7 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_includedir}}
 
-install release/gcc_linux*/mkclean $RPM_BUILD_ROOT%{_bindir}
+install release/gcc_linux*/mkclean $RPM_BUILD_ROOT%{_bindir}/mkvclean
 install release/gcc_linux*/mkvalidator $RPM_BUILD_ROOT%{_bindir}
 install release/gcc_linux*/mkvtree $RPM_BUILD_ROOT%{_bindir}
 install release/gcc_linux*/libebml2.so $RPM_BUILD_ROOT%{_libdir}
@@ -101,6 +101,17 @@ install release/gcc_linux*/libmatroska2.so $RPM_BUILD_ROOT%{_libdir}
 
 cp -a libebml2/ebml $RPM_BUILD_ROOT%{_includedir}
 cp -a libmatroska2/matroska $RPM_BUILD_ROOT%{_includedir}
+install -d $RPM_BUILD_ROOT%{_includedir}/corec/{array,helpers/charconvert,helpers/date,helpers/file,helpers/parser,multithread,node,str}
+cp -p config.h corec/corec/{corec,err,helper,memalloc,memheap,portab}.h $RPM_BUILD_ROOT%{_includedir}/corec
+cp -p corec/tools/coremake/config_helper.h $RPM_BUILD_ROOT%{_includedir}/corec
+cp -p corec/corec/array/array.h $RPM_BUILD_ROOT%{_includedir}/corec/array
+cp -p corec/corec/helpers/charconvert/charconvert.h $RPM_BUILD_ROOT%{_includedir}/corec/helpers/charconvert
+cp -p corec/corec/helpers/date/date.h $RPM_BUILD_ROOT%{_includedir}/corec/helpers/date
+cp -p corec/corec/helpers/file/{file,streams}.h $RPM_BUILD_ROOT%{_includedir}/corec/helpers/file
+cp -p corec/corec/helpers/parser/{buffer,dataheap,hotkey,nodelookup,parser,strtab,strtypes,urlpart}.h $RPM_BUILD_ROOT%{_includedir}/corec/helpers/parser
+cp -p corec/corec/multithread/multithread.h $RPM_BUILD_ROOT%{_includedir}/corec/multithread
+cp -p corec/corec/node/{node,nodebase,nodetools,nodetree}.h $RPM_BUILD_ROOT%{_includedir}/corec/node
+cp -p corec/corec/str/str.h $RPM_BUILD_ROOT%{_includedir}/corec/str
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -110,7 +121,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mkclean
+%attr(755,root,root) %{_bindir}/mkvclean
 %attr(755,root,root) %{_bindir}/mkvalidator
 %attr(755,root,root) %{_bindir}/mkvtree
 %attr(755,root,root) %{_libdir}/libebml2.so
@@ -118,5 +129,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%{_includedir}/corec
 %{_includedir}/ebml
 %{_includedir}/matroska

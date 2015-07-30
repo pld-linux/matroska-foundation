@@ -219,3 +219,17 @@
    USE matroska2
    SOURCE mkvtree.c
  }
+--- foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/node/nodebase.h.orig	2015-03-25 11:01:01.000000000 +0100
++++ foundation-source-29d8f2b2d0e939adfe6941af5f7f7f02344252fb/corec/corec/node/nodebase.h	2015-07-29 21:30:39.189950173 +0200
+@@ -211,9 +211,9 @@
+ } nodemeta;
+ 
+ #ifdef __cplusplus
+-#define META_START(name,id) extern "C" { extern const nodemeta name[]; } const nodemeta name[] = { META_START_CONTINUE(id)
++#define META_START(name,id) extern "C" { extern const nodemeta name[]; } DLLEXPORT const nodemeta name[] = { META_START_CONTINUE(id)
+ #else
+-#define META_START(name,id) const nodemeta name[] = { META_START_CONTINUE(id)
++#define META_START(name,id) DLLEXPORT const nodemeta name[] = { META_START_CONTINUE(id)
+ #endif
+ #define META_START_CONTINUE(id) META_CLASS(CLASS_ID,id) 
+ #define META_CLASS(meta,data) { META_CLASS_##meta,0,(uintptr_t)(data) },
