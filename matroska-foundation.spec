@@ -74,10 +74,13 @@ corec/tools/coremake/coremake -v \
 %endif
 
 %{__make} -C spectool \
-	V=1
+	V=1 \
+	CC="%{__cc}" \
+	CXX="%{__cxx}" \
+	STRIP=true
 
 cd spectool
-../release/gcc_linux/data2lib2
+../release/gcc_linux*/data2lib2
 %{__mv} matroska_sem.c ../libmatroska2
 %{__mv} matroska_sem.h ../libmatroska2/matroska
 cd ..
